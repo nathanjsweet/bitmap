@@ -1,0 +1,1 @@
+An infinitely (okay 2^64) large bitmap data structure. With a test and everything.
