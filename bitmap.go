@@ -4,12 +4,8 @@ type Bitmap map[uint64]uint64
 
 func (b Bitmap) IsSet(i uint64) bool {
 	idx := i / 64
-	_, ok := b[idx]
-	if !ok {
-		b[idx] = 0
-	}
-	bitSet := i % 64
-	return b[idx]&(1<<bitSet) != 0
+	v, ok := b[idx]
+	return ok && v&(1<<(i%64)) != 0
 }
 
 func (b Bitmap) Set(i uint64) {
@@ -26,10 +22,13 @@ func (b Bitmap) Clear(i uint64) {
 	idx := i / 64
 	_, ok := b[idx]
 	if !ok {
-		b[idx] = 0
+		return
 	}
 	bitSet := i % 64
 	b[idx] ^= 1 << bitSet
+	if b[idx] == 0 {
+		delete(b, idx)
+	}
 }
 
 func (b Bitmap) Sets(xs ...uint64) {
