@@ -1,14 +1,14 @@
 package bitmap
 
-type Bitmap map[uint64]uint64
+type BitMap map[uint64]uint64
 
-func (b Bitmap) IsSet(i uint64) bool {
+func (b BitMap) IsSet(i uint64) bool {
 	idx := i / 64
 	v, ok := b[idx]
 	return ok && v&(1<<(i%64)) != 0
 }
 
-func (b Bitmap) Set(i uint64) {
+func (b BitMap) Set(i uint64) {
 	idx := i / 64
 	_, ok := b[idx]
 	if !ok {
@@ -18,7 +18,7 @@ func (b Bitmap) Set(i uint64) {
 	b[idx] |= 1 << bitSet
 }
 
-func (b Bitmap) Clear(i uint64) {
+func (b BitMap) Clear(i uint64) {
 	idx := i / 64
 	_, ok := b[idx]
 	if !ok {
@@ -31,13 +31,13 @@ func (b Bitmap) Clear(i uint64) {
 	}
 }
 
-func (b Bitmap) Sets(xs ...uint64) {
+func (b BitMap) Sets(xs ...uint64) {
 	for _, x := range xs {
 		b.Set(x)
 	}
 }
 
-func (b Bitmap) LeastSignificantZeroBit() uint64 {
+func (b BitMap) LeastSignificantZeroBit() uint64 {
 	var v uint64
 	h := ^uint64(0)
 	for i, k := range b {

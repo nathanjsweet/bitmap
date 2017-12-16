@@ -7,7 +7,7 @@ import (
 )
 
 func TestBitMap(t *testing.T) {
-	b := make(Bitmap)
+	b := make(BitMap)
 
 	b.Sets(2, 3, 4, 7, 11, 12, 14, 22, 24, 26, 32, 35, 37, 41, 42, 47, 49, 53, 62, 64, 256)
 	var s []string
